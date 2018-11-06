@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Collective Voice</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-info">
+  <div class="container">
+    <h3 class="d-flex justify-content-center mt-5 text-white">한글음성인식 프로젝트 Collective College</h3>
+    <div class="row justify-content-center">
+      <div class="col-1 mt-3 mr-3">
+          <a class="btn bt-md border border-outine-info mb-1" onclick="start()"><i class="fas fa-microphone fa-lg text-light"></i></a>
+      </div>
+      <div class="col-9 bg-light mt-3 pb-5 pl-3 pt-3">
+          <div class="words bg-light"></div>
+      </div>
+    </div>
+  </div>
+
+
+  <script type="text/javascript">
+    window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const recognition = new SpeechRecognition();
+    recognition.interimResults = true;
+
+    let p = document.createElement('p');
+    const words = document.querySelector('.words');
+    console.log(words);
+    words.appendChild(p);
+
+    recognition.addEventListener('result', e => {
+      const transcript = Array.from(e.results)
+        .map(result => result[0])
+        .map(result => result.transcript)
+        .join('');
+      p.textContent = transcript;
+      if( e.results[0].isFinal) {
+        p = document.createElement('p');
+        words.appendChild(p);
+      }
+      console.log(transcript);
+    });
+
+    recognition.addEventListener('end', recognition.start);
+
+    function start(){
+      recognition.start();
+    }
+  </script>
+</body>
+</html>
