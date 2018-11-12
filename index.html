@@ -27,6 +27,8 @@
     </div>
   </div>
 
+  <button id="download" class="btn btn-lg btn-info" onclick="download()">문서만들기</button>
+
 
   <script type="text/javascript">
     window.SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -35,7 +37,7 @@
 
     let p = document.createElement('p');
     const words = document.querySelector('.words');
-    console.log(words);
+    // console.log(words);
     words.appendChild(p);
 
     recognition.addEventListener('result', e => {
@@ -48,7 +50,7 @@
         p = document.createElement('p');
         words.appendChild(p);
       }
-      console.log(transcript);
+      // console.log(transcript);
     });
 
     recognition.addEventListener('end', recognition.start);
@@ -56,6 +58,21 @@
     function start(){
       recognition.start();
     }
+
+    function download(){
+      let elements = document.querySelectorAll(".words p");
+      let datas = [];
+      elements.forEach(function(element){
+        datas.push(element.innerHTML);
+      });
+      let data = "text/plain;charset=utf-8," + encodeURIComponent(datas);
+      let a = document.createElement('a');
+      a.href = 'data:' + data;
+      a.download = 'data.txt';
+      a.innerHTML = '다운로드 하기';
+      document.querySelector('.container').appendChild(a);
+    }
+
   </script>
 </body>
 </html>
