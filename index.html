@@ -61,9 +61,10 @@
 
     function download(){
       let elements = document.querySelectorAll(".words p");
-      let datas = [];
+      let datas ='';
       elements.forEach(function(element){
-        datas.push(element.innerHTML);
+        datas += element.innerHTML;
+        datas += '\r\n';
       });
       let data = "text/plain;charset=utf-8," + encodeURIComponent(datas);
       let a = document.createElement('a');
